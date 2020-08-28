@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 
 Vue.use(Vuex)
+axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`
 
 export const store = new Vuex.Store({
   state: {
@@ -20,6 +21,30 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    interceptorsRequest (setex) {
+      console.log('interse')
+      axios.interceptors.request.use(function (config) {
+        // Do something before request is sent
+        config.headers.Authorization = `Bearer ${setex.state.token}`
+        console.log(config)
+        return config
+      }, function (error) {
+        // Do something with request error
+        return Promise.reject(error)
+      })
+    },
+    interceptorsResponse () {
+      axios.interceptors.response.use(function (response) {
+        // Any status code that lie within the range of 2xx cause this function to trigger
+        // Do something with response data
+        return response
+      }, function (error) {
+        // Any status codes that falls outside the range of 2xx cause this function to trigger
+        // Do something with response error
+        console.log(error)
+        return Promise.reject(error)
+      })
+    },
     getProducts (setex) {
       axios.get('http://localhost:3000/api/v1/product/?page=1&limit=30')
         .then(res => {
@@ -32,10 +57,11 @@ export const store = new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios.post('http://localhost:3000/api/v1/user/login', payload)
           .then(res => {
-            console.log(res)
+            console.log(res.data)
             setex.commit('userM', res.data.result)
-            localStorage.setItem('token', res.data.result[0].token)
-            resolve(res.data.result[0])
+            localStorage.setItem('token', res.data.result.token)
+            axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`
+            resolve(res.data.result)
           })
           .catch(err => {
             console.log(err)

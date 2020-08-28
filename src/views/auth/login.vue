@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <h1>Login Page</h1>
         <form>
           <div class="form-group">
@@ -15,12 +15,13 @@
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" for="exampleCheck1">Check me out</label>
           </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary" @click="handleLogin">Submit</button>
         </form>
     </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'Login',
   data () {
@@ -28,6 +29,20 @@ export default {
       email: '',
       password: ''
     }
+  },
+  methods: {
+    handleLogin (e) {
+      e.preventDefault()
+      const data = {
+        email: this.email,
+        password: this.password
+      }
+      this.login(data)
+        .then(() => {
+          this.$router.push('/home')
+        })
+    },
+    ...mapActions(['login'])
   }
 }
 </script>
