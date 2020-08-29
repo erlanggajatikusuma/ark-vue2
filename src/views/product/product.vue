@@ -76,7 +76,7 @@
                     <div class="modalContent d-flex py-2">
                         <label class="col-sm-2 col-form-label h6">Image</label>
                         <div class="col-sm-10">
-                            <input type="file" class="form-control shadow">
+                            <input type="file" class="form-control shadow" @change="onFileSelected">
                         </div>
                     </div>
                     <div class="modalContent d-flex py-2">
@@ -135,7 +135,7 @@
                     <div class="modalContent d-flex py-2">
                         <label class="col-sm-2 col-form-label h6">Image</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control shadow" v-model="form.image">
+                            <input type="file" class="form-control shadow" @change="onFileSelected">
                         </div>
                     </div>
                     <div class="modalContent d-flex py-2">
@@ -200,6 +200,7 @@ export default {
   },
   data () {
     return {
+      selectedFile: null,
       products: '',
       // alert
       errorMsg: false,
@@ -216,15 +217,18 @@ export default {
     }
   },
   methods: {
-    getData () {
-      axios.get('http://localhost:3000/api/v1/product/?page=1&limit=20')
-        .then(res => {
-          console.log(res.data.result)
-          this.products = res.data.result.products
-        })
+    onFileSelected (event) {
+      this.selectedFile = event.target.files[0]
     },
     insertData () {
-      axios.post('http://localhost:3000/api/v1/product/', this.form)
+      const fd = new FormData()
+      fd.append('image', this.selectedFile, this.selectedFile.name)
+      fd.append('name', this.form.name)
+      fd.append('price', this.form.price)
+      fd.append('idStatus', this.form.idStatus)
+      fd.append('idCategory', this.form.idCategory)
+      console.log(fd)
+      axios.post('http://localhost:3000/api/v1/product/', fd)
         .then(res => {
           this.getData()
           this.form = ''
@@ -238,16 +242,21 @@ export default {
       this.form.idStatus = product.idStatus
       this.form.image = product.image
     },
-    cancel () {
-      this.form.id = ''
-      this.form.name = ''
-      this.form.price = ''
-      this.form.idCategory = ''
-      this.form.idStatus = ''
-      this.form.image = ''
-    },
     updateData (form) {
-      axios.patch('http://localhost:3000/api/v1/product/' + form.id, { name: this.form.name, price: this.form.price, idCategory: this.form.idCategory, idStatus: this.form.idStatus, image: this.form.image })
+      const fd = new FormData()
+      fd.append('name', this.form.name)
+      fd.append('price', this.form.price)
+      fd.append('idStatus', this.form.idStatus)
+      fd.append('idCategory', this.form.idCategory)
+      // fd.append('image', this.selectedFile, this.selectedFile.name)
+      // fd.append('_method', 'PATCH')
+      axios.patch('http://localhost:3000/api/v1/product/' + form.id, {
+        name: this.form.name,
+        price: this.form.price,
+        idCategory: this.form.idCategory,
+        idStatus: this.form.idStatus
+        // image: this.form.image
+      })
         .then(res => {
           this.form.name = ''
           this.form.price = ''
@@ -260,6 +269,51 @@ export default {
           console.log(err)
         })
     },
+    getData () {
+      axios.get('http://localhost:3000/api/v1/product/?page=1&limit=20')
+        .then(res => {
+          console.log(res.data.result)
+          this.products = res.data.result.products
+        })
+    },
+    // insertData () {
+    //   axios.post('http://localhost:3000/api/v1/product/', this.form)
+    //     .then(res => {
+    //       this.getData()
+    //       this.form = ''
+    //     })
+    // },
+    // edit (product) {
+    //   console.log(product)
+    //   this.form.id = product.id
+    //   this.form.name = product.name
+    //   this.form.price = product.price
+    //   this.form.idCategory = product.idCategory
+    //   this.form.idStatus = product.idStatus
+    //   this.form.image = product.image
+    // },
+    cancel () {
+      this.form.id = ''
+      this.form.name = ''
+      this.form.price = ''
+      this.form.idCategory = ''
+      this.form.idStatus = ''
+      this.form.image = ''
+    },
+    // updateData (form) {
+    //   axios.patch('http://localhost:3000/api/v1/product/' + form.id, { name: this.form.name, price: this.form.price, idCategory: this.form.idCategory, idStatus: this.form.idStatus, image: this.form.image })
+    //     .then(res => {
+    //       this.form.name = ''
+    //       this.form.price = ''
+    //       this.form.idCategory = ''
+    //       this.form.idStatus = ''
+    //       this.form.image = ''
+    //       this.getData()
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // },
     deleteData (product) {
       axios.delete('http://localhost:3000/api/v1/product/' + product.id)
         .then(res => {
