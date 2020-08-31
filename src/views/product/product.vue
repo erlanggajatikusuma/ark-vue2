@@ -33,7 +33,6 @@
                       <th>Price</th>
                       <th>Id Category</th>
                       <th>Id Status</th>
-                      <!-- <th>Image</th> -->
                       <th>Edit</th>
                       <th>Delete</th>
                     </tr>
@@ -45,9 +44,8 @@
                       <td>Rp. {{product.price}}</td>
                       <td>{{product.idCategory}}</td>
                       <td>{{product.idStatus}}</td>
-                      <!-- <td>{{product.image}}</td> -->
                       <td><a href="#" class="text-success" @click="showEditModal=true;edit(product)">Edit</a></td>
-                      <td><a href="#" class="text-danger" @click="showDeleteModal=true;deleteData(product)">Delete</a></td>
+                      <td><a href="#" class="text-danger" @click="showDeleteModal=true;deletedId(product.id)">Delete</a></td>
                     </tr>
                   </tbody>
                 </table>
@@ -181,7 +179,7 @@
                   <h4 class="text-danger">Are you sure to delete this product?</h4>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-danger btn-lg btn-block" @click="showDeleteModal=false">Yes</button>
+                  <button type="button" class="btn btn-danger btn-lg btn-block" @click="showDeleteModal=false;deleteData()">Yes</button>
                   <button type="button" class="btn btn-secondary btn-lg btn-block" @click="showDeleteModal=false">Cancel</button>
                 </div>
               </div>
@@ -195,9 +193,6 @@
 import axios from 'axios'
 export default {
   name: 'Product',
-  components: {
-    // Card
-  },
   data () {
     return {
       selectedFile: null,
@@ -208,6 +203,7 @@ export default {
       showEditModal: false,
       updateSubmit: false,
       showDeleteModal: false,
+      deleted: null,
       form: {
         name: '',
         price: '',
@@ -219,6 +215,9 @@ export default {
   methods: {
     onFileSelected (event) {
       this.selectedFile = event.target.files[0]
+    },
+    deletedId (id) {
+      this.deleted = id
     },
     insertData () {
       const fd = new FormData()
@@ -242,21 +241,14 @@ export default {
       this.form.idStatus = product.idStatus
       this.form.image = product.image
     },
-    updateData (form) {
+    updateData () {
       const fd = new FormData()
       fd.append('name', this.form.name)
       fd.append('price', this.form.price)
       fd.append('idStatus', this.form.idStatus)
       fd.append('idCategory', this.form.idCategory)
-      // fd.append('image', this.selectedFile, this.selectedFile.name)
-      // fd.append('_method', 'PATCH')
-      axios.patch('http://localhost:3000/api/v1/product/' + form.id, {
-        name: this.form.name,
-        price: this.form.price,
-        idCategory: this.form.idCategory,
-        idStatus: this.form.idStatus
-        // image: this.form.image
-      })
+      fd.append('image', this.selectedFile)
+      axios.patch('http://localhost:3000/api/v1/product/' + this.form.id, fd)
         .then(res => {
           this.form.name = ''
           this.form.price = ''
@@ -276,22 +268,6 @@ export default {
           this.products = res.data.result.products
         })
     },
-    // insertData () {
-    //   axios.post('http://localhost:3000/api/v1/product/', this.form)
-    //     .then(res => {
-    //       this.getData()
-    //       this.form = ''
-    //     })
-    // },
-    // edit (product) {
-    //   console.log(product)
-    //   this.form.id = product.id
-    //   this.form.name = product.name
-    //   this.form.price = product.price
-    //   this.form.idCategory = product.idCategory
-    //   this.form.idStatus = product.idStatus
-    //   this.form.image = product.image
-    // },
     cancel () {
       this.form.id = ''
       this.form.name = ''
@@ -300,26 +276,10 @@ export default {
       this.form.idStatus = ''
       this.form.image = ''
     },
-    // updateData (form) {
-    //   axios.patch('http://localhost:3000/api/v1/product/' + form.id, { name: this.form.name, price: this.form.price, idCategory: this.form.idCategory, idStatus: this.form.idStatus, image: this.form.image })
-    //     .then(res => {
-    //       this.form.name = ''
-    //       this.form.price = ''
-    //       this.form.idCategory = ''
-    //       this.form.idStatus = ''
-    //       this.form.image = ''
-    //       this.getData()
-    //     })
-    //     .catch(err => {
-    //       console.log(err)
-    //     })
-    // },
-    deleteData (product) {
-      axios.delete('http://localhost:3000/api/v1/product/' + product.id)
+    deleteData () {
+      axios.delete('http://localhost:3000/api/v1/product/' + this.deleted)
         .then(res => {
           this.getData()
-          const index = this.products.indexOf(product.name)
-          this.products.splice(index, 1)
         })
     }
   },
