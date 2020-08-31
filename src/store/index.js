@@ -9,6 +9,7 @@ export const store = new Vuex.Store({
   state: {
     products: [],
     user: {},
+    items: [],
     token: localStorage.getItem('token') || null
   },
   mutations: {
@@ -18,6 +19,9 @@ export const store = new Vuex.Store({
     userM (state, payload) {
       state.user = payload
       state.token = payload.token
+    },
+    logoutM (state) {
+      state.token = null
     }
   },
   actions: {
@@ -67,6 +71,27 @@ export const store = new Vuex.Store({
             console.log(err)
           })
       })
+    },
+    logout (setex) {
+      setex.commit('logoutM')
+      localStorage.removeItem('token')
+    },
+    register (setex, payload) {
+      console.log(payload)
+      return new Promise((resolve, reject) => {
+        axios.post('http://localhost:3000/api/v1/user/register', payload)
+          .then(res => {
+            console.log(res.data)
+            console.log(res)
+            resolve(res.data)
+          })
+          .catch(err => {
+            console.log(err.response)
+            if (err.response.status === 409) {
+              alert('email already registered')
+            }
+          })
+      })
     }
   },
   getters: {
@@ -76,6 +101,9 @@ export const store = new Vuex.Store({
     isLogin (state) {
       console.log(state)
       return state.token !== null
+    },
+    itemsG (state) {
+      return state.items
     }
   },
   modules: {
