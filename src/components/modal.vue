@@ -13,7 +13,7 @@
                         <div class="print-list mt-5">
                             <div class="item-checkout" v-for="item in items" :key="item.id">
                                 <span>{{item.name}} x {{item.qty}} </span>
-                                <span>Rp. {{item.price}}</span>
+                                <span>Rp. {{item.price * item.qty}}</span>
                             </div>
                             <div class="item-checkout">
                                 <span>PPN 10%</span>
