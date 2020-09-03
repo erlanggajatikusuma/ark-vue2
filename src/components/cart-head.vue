@@ -8,9 +8,9 @@
 <script>
 export default {
   name: 'cartHead',
-  data () {
-    return {
-      item: 0
+  computed: {
+    item () {
+      return this.$store.getters.quantity
     }
   }
 }
