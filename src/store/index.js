@@ -22,6 +22,21 @@ export const store = new Vuex.Store({
     },
     logoutM (state) {
       state.token = null
+    },
+    itemsM (state, payload) {
+      const data = payload
+      const found = state.items.find(item => item.id === payload.id)
+      if (found) {
+        const carItem = state.items
+        const id = found.id
+        console.log(id)
+        const index = state.items.map(item => {
+          return item.id
+        }).indexOf(id)
+        carItem.splice(index, 1)
+      } else {
+        state.items.push(data)
+      }
     }
   },
   actions: {
@@ -61,14 +76,16 @@ export const store = new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios.post('http://localhost:3000/api/v1/user/login', payload)
           .then(res => {
-            console.log(res.data)
             setex.commit('userM', res.data.result)
             localStorage.setItem('token', res.data.result.token)
             axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`
             resolve(res.data.result)
           })
           .catch(err => {
-            console.log(err)
+            console.log(err.response)
+            if (err.response.status === 401) {
+              alert('incorrect email or password')
+            }
           })
       })
     },
@@ -103,6 +120,9 @@ export const store = new Vuex.Store({
       return state.token !== null
     },
     itemsG (state) {
+      return state.items
+    },
+    quantity (state) {
       return state.items
     }
   },
