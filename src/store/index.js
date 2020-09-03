@@ -27,13 +27,13 @@ export const store = new Vuex.Store({
       const data = payload
       const found = state.items.find(item => item.id === payload.id)
       if (found) {
-        const carItem = state.items
+        const cartItem = state.items
         const id = found.id
         console.log(id)
         const index = state.items.map(item => {
           return item.id
         }).indexOf(id)
-        carItem.splice(index, 1)
+        cartItem.splice(index, 1)
       } else {
         state.items.push(data)
       }
@@ -82,7 +82,6 @@ export const store = new Vuex.Store({
             resolve(res.data.result)
           })
           .catch(err => {
-            console.log(err.response)
             if (err.response.status === 401) {
               alert('incorrect email or password')
             }
@@ -123,7 +122,21 @@ export const store = new Vuex.Store({
       return state.items
     },
     quantity (state) {
-      return state.items
+      return state.items.length
+    },
+    price (state) {
+      let total = 0
+      state.items.forEach(item => {
+        total += item.price * item.qty
+      })
+      return total
+    },
+    ppn (state) {
+      let ppn = 0
+      state.items.forEach(item => {
+        ppn += (item.price * item.qty) * (10 / 100)
+      })
+      return ppn
     }
   },
   modules: {

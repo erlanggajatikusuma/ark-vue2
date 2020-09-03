@@ -9,18 +9,19 @@
             <div class="add-item p-3 flex-grow-1 mx-2">
                 <h5 class="text-left">{{item.name}}</h5>
                 <div class="add-btn d-flex mt-5">
-                    <button type="button" @click="dec">-</button>
+                    <button type="button" @click="dec(item.id)">-</button>
                     <span class="item" style="width: 25px">{{item.qty}}</span>
-                    <button type="button" @click="inc">+</button>
-                    <span class="flex-grow-1 text-right"><h6>Rp. {{ item.price }}</h6></span>
+                    <button type="button" @click="inc(item.id)">+</button>
+                    <span class="flex-grow-1 text-right"><h6>Rp. {{ item.price * item.qty }}</h6></span>
                 </div>
             </div>
         </div>
         <div class="cart-total">
-          <div class="total d-flex justify-content-between px-2" v-if="total > 0">
+          <div class="total d-flex justify-content-between pr-3 pl-2" v-if="total > 0">
             <span class="right">Total</span>
-            <span class="right">Rp. {{total}}</span>
+            <span class="right font-weight-bold">Rp. {{price}}*</span>
           </div>
+          <span class="d-flex m-2 font-weight-bold" v-if="total > 0">*Belum Termasuk ppn</span>
           <div class="checkout-btn" v-if="total > 0">
             <button class="btn btn-two font-weight-bold py-2 mb-2 btn-block" data-toggle="modal" data-target="#modalCheckout">
               Checkout
@@ -50,27 +51,32 @@ export default {
   },
   data () {
     return {
-      // qty: this.$store.state.items,
-      price: this.$store.state.items
+      quantity: this.$store.state.items
     }
   },
   methods: {
-    // ...mapActions(['getProducts']),
-    inc () {
-      console.log(this.price[0].price)
-      this.qty++
+    inc (id) {
+      this.quantity.forEach(q => {
+        if (q.id === id) {
+          q.qty++
+        }
+      })
     },
-    dec () {
-      // console.log(this.qty[0].qty)
-      console.log(this.price[0].price)
-      // this.qty[1].qty--
+    dec (id) {
+      this.quantity.forEach(q => {
+        if (q.id === id) {
+          q.qty--
+        }
+      })
     }
   },
   computed: {
     ...mapGetters({
       // products: 'productsG'
       items: 'itemsG',
-      qty: 'quantity'
+      qty: 'quantity',
+      price: 'price',
+      ppn: 'ppn'
     }),
     total () {
       return this.qty
