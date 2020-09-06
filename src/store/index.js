@@ -10,15 +10,26 @@ export const store = new Vuex.Store({
     products: [],
     user: {},
     items: [],
-    token: localStorage.getItem('token') || null
+    token: localStorage.getItem('token') || null,
+    roleId: localStorage.getItem('roleId') || null,
+    allUser: []
+    // pagination: null
   },
   mutations: {
-    productsM (state, payload) {
+    // productsM (state, payload) {
+    //   state.products = payload
+    // },
+    SET_PRODUCTS (state, payload) {
       state.products = payload
     },
-    userM (state, payload) {
+    // userM (state, payload) {
+    //   state.user = payload
+    //   state.token = payload.token
+    // },
+    LOGIN_USER (state, payload) {
       state.user = payload
       state.token = payload.token
+      state.roleId = payload.roleId
     },
     logoutM (state) {
       state.token = null
@@ -29,7 +40,6 @@ export const store = new Vuex.Store({
       if (found) {
         const cartItem = state.items
         const id = found.id
-        console.log(id)
         const index = state.items.map(item => {
           return item.id
         }).indexOf(id)
@@ -37,6 +47,15 @@ export const store = new Vuex.Store({
       } else {
         state.items.push(data)
       }
+    },
+    clearCart (state) {
+      state.items = []
+    },
+    ALL_USER (state, payload) {
+      state.allUser = payload
+    },
+    SET_PAGINATION (state, payload) {
+      state.pagination = payload
     }
   },
   actions: {
@@ -64,25 +83,72 @@ export const store = new Vuex.Store({
         return Promise.reject(error)
       })
     },
-    getProducts (setex) {
-      axios.get('http://localhost:3000/api/v1/product/?page=1&limit=30')
-        .then(res => {
-          console.log(res.data.result.products)
-          setex.commit('productsM', res.data.result.products)
-        })
+    // getProducts (setex) {
+    //   axios.get('http://localhost:3000/api/v1/product/?page=1&limit=30')
+    //     .then(res => {
+    //       console.log(res.data.result)
+    //       setex.commit('productsM', res.data.result.products)
+    //     })
+    // },
+    getProducts (context) {
+      return new Promise((resolve, reject) => {
+        // axios.get(`${process.env.VUE_APP_BASE_URL}api/v1/product`)
+        axios.get('http://localhost:3000/api/v1/product?page=2')
+          .then(res => {
+            console.log(res.data.result)
+            context.commit('SET_PRODUCTS', res.data.result.products)
+          })
+          .catch(err => console.log(err))
+      })
+    },
+    insertProduct (context, payload) {
+      return new Promise((resolve, reject) => {
+        axios.post('http://localhost:3000/api/v1/product', payload)
+          .then(res => {
+            console.log(res.data.result)
+            resolve(res.data.result.products)
+          })
+          .catch(err => reject(err))
+      })
+    },
+    updateProduct (context, payload) {
+      return new Promise((resolve, reject) => {
+        axios.patch('http://localhost:3000/api/v1/product/' + payload.id, payload.data)
+          .then(res => {
+            console.log(res.data.result)
+            resolve(res.data.result.products)
+          })
+          .catch(err => reject(err))
+      })
+    },
+    deleteProduct (context, payload) {
+      return new Promise((resolve, reject) => {
+        axios.delete('http://localhost:3000/api/v1/product/' + payload)
+          .then(res => {
+            console.log(res.data.result)
+            resolve(res.data.result)
+          })
+          .catch(err => reject(err))
+      })
     },
     login (setex, payload) {
       console.log(payload)
       return new Promise((resolve, reject) => {
-        axios.post('http://localhost:3000/api/v1/user/login', payload)
+        // axios.post('http://localhost:3000/api/v1/user/login', payload)
+        axios.post(`${process.env.VUE_APP_BASE_URL}/api/v1/user/login`, payload)
           .then(res => {
-            setex.commit('userM', res.data.result)
+            setex.commit('LOGIN_USER', res.data.result)
             localStorage.setItem('token', res.data.result.token)
+            localStorage.setItem('roleId', res.data.result.roleId)
             axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`
             resolve(res.data.result)
           })
           .catch(err => {
+            console.log(err)
             if (err.response.status === 401) {
+              alert('incorrect email or password')
+            }
+            if (err.response.status === 404) {
               alert('incorrect email or password')
             }
           })
@@ -95,10 +161,9 @@ export const store = new Vuex.Store({
     register (setex, payload) {
       console.log(payload)
       return new Promise((resolve, reject) => {
-        axios.post('http://localhost:3000/api/v1/user/register', payload)
+        // axios.post('http://localhost:3000/api/v1/user/register', payload)
+        axios.post(`${process.env.VUE_APP_BASE_URL}/api/v1/user/register`, payload)
           .then(res => {
-            console.log(res.data)
-            console.log(res)
             resolve(res.data)
           })
           .catch(err => {
@@ -108,6 +173,23 @@ export const store = new Vuex.Store({
             }
           })
       })
+    },
+    clearCart (context) {
+      context.commit('clearCart')
+    },
+    getAllUser (context) {
+      // axios.get('http://localhost:3000/api/v1/user/')
+      axios.get(`${process.env.VUE_APP_BASE_URL}/api/v1/user/`)
+        .then(res => {
+          console.log(res.data)
+          context.commit('ALL_USER', res.data.result)
+        })
+        .catch(err => {
+          console.log(err)
+          if (err.response.status === 403) {
+            alert('Only admin')
+          }
+        })
     }
   },
   getters: {
@@ -137,6 +219,9 @@ export const store = new Vuex.Store({
         ppn += (item.price * item.qty) * (10 / 100)
       })
       return ppn
+    },
+    allUser (state) {
+      return state.allUser
     }
   },
   modules: {
