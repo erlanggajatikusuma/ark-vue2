@@ -1,14 +1,13 @@
 <template>
-    <div class="card ml-5 my-2 bg-warning">
+    <div class="card ml-5 my-2">
         <div class="card-content my-3">
             <a href="#">
               <div class="img-one">
                 <img :src="data.image" class="card-img" @click="addToCart">
-                <img class="select" v-if="selected" src="../assets/tick (1).png">
               </div>
-              <div class="img-two" @click="selected= !selected">
+              <!-- <div class="img-two" @click="selected= !selected">
                 <img v-if="selected" src="../assets/tick (1).png">
-              </div>
+              </div> -->
             </a>
             <p class="text-wrap d-flex ml-2 mt-3">{{data.name}}</p>
             <h5 class="d-flex ml-2">Rp. {{data.price}}</h5>
@@ -40,9 +39,6 @@ export default {
         image: this.data.image,
         qty: 1
       })
-    },
-    remove (id) {
-      console.log(id)
     }
   }
 }
@@ -50,7 +46,7 @@ export default {
 
 <style scoped>
     .card {
-        width: 255px;
+        width: 250px;
         background: transparent;
         border: transparent;
     }
@@ -61,14 +57,7 @@ export default {
         object-fit: cover;
         cursor: pointer;
     }
-    .select {
-      z-index: 1;
-    }
-    /* .img-one {
-      border-radius: 10px;
-      filter: brightness(50%);
-    } */
-    .img-two {
+    /* .img-two {
       z-index: -1;
       position: absolute;
       background: black;
@@ -79,5 +68,5 @@ export default {
       margin: auto;
       width: 250px;
       height: 200px;
-    }
+    } */
 </style>
