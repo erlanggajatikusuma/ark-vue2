@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import history from './history'
 
 Vue.use(Vuex)
 axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`
@@ -12,8 +13,8 @@ export const store = new Vuex.Store({
     items: [],
     token: localStorage.getItem('token') || null,
     roleId: localStorage.getItem('roleId') || null,
-    allUser: []
-    // pagination: null
+    allUser: [],
+    pagination: null
   },
   mutations: {
     // productsM (state, payload) {
@@ -59,6 +60,18 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
+    feature (context, payload) {
+      return new Promise((resolve, reject) => {
+        // axios.get(`http://localhost:3000/api/v1/product${payload}`)
+        axios.get(`${process.env.VUE_APP_BASE_URL}/api/v1/product${payload}`)
+          .then(res => {
+            console.log(res.data)
+            resolve(res.data.result.products)
+            context.commit('SET_PRODUCTS', res.data.result)
+          })
+          .catch(err => console.log(err))
+      })
+    },
     interceptorsRequest (setex) {
       console.log('interse')
       axios.interceptors.request.use(function (config) {
@@ -92,18 +105,19 @@ export const store = new Vuex.Store({
     // },
     getProducts (context) {
       return new Promise((resolve, reject) => {
-        // axios.get(`${process.env.VUE_APP_BASE_URL}api/v1/product`)
-        axios.get('http://localhost:3000/api/v1/product?page=2')
+        axios.get(`${process.env.VUE_APP_BASE_URL}/api/v1/product?limit=50`)
+        // axios.get('http://localhost:3000/api/v1/product?limit=50')
           .then(res => {
             console.log(res.data.result)
-            context.commit('SET_PRODUCTS', res.data.result.products)
+            context.commit('SET_PRODUCTS', res.data.result)
           })
           .catch(err => console.log(err))
       })
     },
     insertProduct (context, payload) {
       return new Promise((resolve, reject) => {
-        axios.post('http://localhost:3000/api/v1/product', payload)
+        // axios.post('http://localhost:3000/api/v1/product', payload)
+        axios.post(`${process.env.VUE_APP_BASE_URL}/api/v1/product`, payload)
           .then(res => {
             console.log(res.data.result)
             resolve(res.data.result.products)
@@ -113,7 +127,8 @@ export const store = new Vuex.Store({
     },
     updateProduct (context, payload) {
       return new Promise((resolve, reject) => {
-        axios.patch('http://localhost:3000/api/v1/product/' + payload.id, payload.data)
+        // axios.patch('http://localhost:3000/api/v1/product/' + payload.id, payload.data)
+        axios.patch(`${process.env.VUE_APP_BASE_URL}/api/v1/product/` + payload.id, payload.data)
           .then(res => {
             console.log(res.data.result)
             resolve(res.data.result.products)
@@ -123,7 +138,8 @@ export const store = new Vuex.Store({
     },
     deleteProduct (context, payload) {
       return new Promise((resolve, reject) => {
-        axios.delete('http://localhost:3000/api/v1/product/' + payload)
+        // axios.delete('http://localhost:3000/api/v1/product/' + payload)
+        axios.delete(`${process.env.VUE_APP_BASE_URL}/api/v1/product/` + payload)
           .then(res => {
             console.log(res.data.result)
             resolve(res.data.result)
@@ -225,5 +241,6 @@ export const store = new Vuex.Store({
     }
   },
   modules: {
+    history
   }
 })
