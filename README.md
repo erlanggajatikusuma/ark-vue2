@@ -119,7 +119,7 @@ npm run build
  </p> -->
  
 ## Related Project
-* [`Backend-SipPOSApp`](https://github.com/erlanggajatikusuma/ark-backend)
+* [`ark-backend`](https://github.com/erlanggajatikusuma/ark-backend)
 
 <!-- CONTACT -->
 ## Contact
