@@ -47,6 +47,9 @@
                 </table>
               </div>
             </div>
+            <div class="page row">
+              <pagination :data="paginations" @event-page="handlePage"/>
+            </div>
         </div>
         <modalProduct v-show="modalActive" :data="modalsData" @close="toggle" @fire-event="dataHandler" />
         <delModal v-show="modalDel" @event-modal="toggleDel" @delete-data="deleteData"/>
@@ -57,11 +60,13 @@
 import { mapGetters, mapActions } from 'vuex'
 import modalProduct from './modal'
 import delModal from './delModal'
+import pagination from '../../components/pagination'
 export default {
   name: 'Product',
   components: {
     modalProduct,
-    delModal
+    delModal,
+    pagination
   },
   data () {
     return {
@@ -162,11 +167,17 @@ export default {
           this.getProducts()
           alert('Data successfully deleted')
         })
+    },
+    handlePage (number) {
+      console.log(number)
+      const url = `?page=${number}`
+      this.getProducts(url)
     }
   },
   computed: {
     ...mapGetters({
-      products: 'productsG'
+      products: 'productsG',
+      paginations: 'get_page'
     })
   },
   mounted () {
@@ -176,4 +187,7 @@ export default {
 </script>
 
 <style scoped>
+.page {
+  margin: auto;
+}
 </style>

@@ -26,12 +26,12 @@
             <button class="btn btn-two font-weight-bold py-2 mb-2 btn-block" data-toggle="modal" data-target="#modalCheckout">
               Checkout
             </button>
-            <button class="btn btn-one font-weight-bold py-2 btn-block">
+            <button class="btn btn-one font-weight-bold py-2 btn-block" @click="clear">
               Cancel
             </button>
           </div>
         </div>
-        <Modal/>
+        <modalCheckout/>
     </div>
 </template>
 
@@ -39,15 +39,13 @@
 import { mapGetters } from 'vuex'
 import cartHead from './cart-head'
 import emptyCart from './emptyCart'
-import Modal from './modal'
-// import cartItem from './cart-item'
+import modalCheckout from './modal'
 export default {
   name: 'cart',
   components: {
     cartHead,
     emptyCart,
-    Modal
-    // cartItem
+    modalCheckout
   },
   data () {
     return {
@@ -68,11 +66,13 @@ export default {
           q.qty--
         }
       })
+    },
+    clear () {
+      this.$store.dispatch('clearCart') // call actions
     }
   },
   computed: {
     ...mapGetters({
-      // products: 'productsG'
       items: 'itemsG',
       qty: 'quantity',
       price: 'price',
@@ -82,9 +82,6 @@ export default {
       return this.qty
     }
   }
-  // mounted () {
-  //   this.getProducts()
-  // }
 }
 </script>
 

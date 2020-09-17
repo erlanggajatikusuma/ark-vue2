@@ -1,7 +1,7 @@
 <template>
     <div>
         <headBar/>
-        <div class="main-content d-flex bg-dark">
+        <div class="main-content d-flex">
           <Sidebar/>
           <historyContent/>
         </div>

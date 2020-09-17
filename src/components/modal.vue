@@ -6,10 +6,10 @@
             <div class="modal-content">
                 <div class="modal-body">
                     <div class="modal-head d-flex justify-content-between">
-                        <h5 class="modal-title">Checkout</h5>
-                        <span class="h6">Receipt no: #010410919</span>
+                        <h5 class="modal-title font-weight-bold">Checkout</h5>
+                        <span class="h6 font-weight-bold">Receipt no: #010410919</span>
                     </div>
-                    <small class="h6 mb-5">Cashier: Pevita Pearce</small>
+                    <small class="h6 mb-5 d-flex">Cashier: Pevita Pearce</small>
                         <div class="print-list mt-5">
                             <div class="item-checkout" v-for="item in items" :key="item.id">
                                 <span>{{item.name}} x {{item.qty}} </span>
@@ -23,7 +23,7 @@
                                 Total: Rp. {{price + ppn}}
                             </div>
                             <div class="clearfix"></div>
-                            <p class="font-weight-bold font-15">
+                            <p class="text-left font-weight-bold font-15">
                                 Payment: Cash
                             </p>
                         </div>
@@ -31,7 +31,7 @@
                 <div class="modal-footer">
                     <div class="footer-btn align-items-center">
                         <button type="button" class="btn print">Print</button>
-                        <p class="h6">Or</p>
+                        <p class="h6 my-2">Or</p>
                         <button type="button" class="btn send">Send Email</button>
                     </div>
                 </div>
@@ -44,7 +44,7 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  name: 'modal',
+  name: 'modalCheckout',
   computed: {
     ...mapGetters({
       items: 'itemsG',
@@ -78,8 +78,8 @@ button.send {
 }
 
 .footer-btn button.btn {
-    width: 300px;
-    border-radius: 10px;
+    width: 350px;
+    border-radius: 5px;
     font-size: 20px;
     color: #FFFFFF;
 }

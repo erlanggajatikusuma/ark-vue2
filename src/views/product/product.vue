@@ -234,6 +234,7 @@ export default {
         })
     },
     edit (product) {
+      console.log(product)
       this.form.id = product.id
       this.form.name = product.name
       this.form.price = product.price

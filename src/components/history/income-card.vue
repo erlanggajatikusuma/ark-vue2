@@ -40,12 +40,8 @@ export default {
 
 <style scoped>
     .card-body {
-        /* width: 373px; */
-        /* width: 373px; */
-        /* height: 213px; */
         background: linear-gradient(285.38deg, #FBB2B4 30.05%, rgba(255, 143, 178, 0) 133.19%);
         filter: drop-shadow(10px 15px 10px rgba(255, 143, 178, 0.25));
         border-radius: 10px;
-        /* padding: 35px; */
     }
 </style>

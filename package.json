@@ -1,5 +1,5 @@
 {
-  "name": "ark-coffe",
+  "name": "ark-cafe",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,13 +10,17 @@
   "dependencies": {
     "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
+    "bootstrap-vue": "^2.16.0",
+    "chart.js": "^2.9.3",
     "core-js": "^3.6.5",
     "jquery": "^3.5.1",
     "node-sass": "^4.14.1",
     "popper.js": "^1.16.1",
     "sass-loader": "^10.0.1",
     "vue": "^2.6.11",
+    "vue-chartjs": "^3.5.1",
     "vue-router": "^3.2.0",
+    "vuelidate": "^0.7.5",
     "vuex": "^3.4.0"
   },
   "devDependencies": {

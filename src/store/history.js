@@ -1,12 +1,20 @@
 import axios from 'axios'
 
 const state = {
-  histories: []
+  histories: [],
+  historiesIncome: [],
+  historiesMonth: []
 }
 
 const mutations = {
   SET_HISTORIES (state, payload) {
     state.histories = payload
+  },
+  SET_HISTORIES_INCOME (state, payload) {
+    state.historiesIncome = payload
+  },
+  SET_HISTORIES_MONTH (state, payload) {
+    state.historiesMonth = payload
   }
 }
 

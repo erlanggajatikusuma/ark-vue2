@@ -14,7 +14,7 @@ export const store = new Vuex.Store({
     token: localStorage.getItem('token') || null,
     roleId: localStorage.getItem('roleId') || null,
     allUser: [],
-    pagination: null
+    pagination: {}
   },
   mutations: {
     // productsM (state, payload) {
@@ -65,9 +65,9 @@ export const store = new Vuex.Store({
         // axios.get(`http://localhost:3000/api/v1/product${payload}`)
         axios.get(`${process.env.VUE_APP_BASE_URL}/api/v1/product${payload}`)
           .then(res => {
-            console.log(res.data)
-            resolve(res.data.result.products)
+            resolve(res.data.result)
             context.commit('SET_PRODUCTS', res.data.result)
+            context.commit('SET_PAGINATION', res.data.pagination)
           })
           .catch(err => console.log(err))
       })
@@ -103,13 +103,15 @@ export const store = new Vuex.Store({
     //       setex.commit('productsM', res.data.result.products)
     //     })
     // },
-    getProducts (context) {
+    getProducts (context, payload) {
       return new Promise((resolve, reject) => {
-        axios.get(`${process.env.VUE_APP_BASE_URL}/api/v1/product?limit=50`)
+        axios.get(`${process.env.VUE_APP_BASE_URL}/api/v1/product${payload || ''}`)
         // axios.get('http://localhost:3000/api/v1/product?limit=50')
           .then(res => {
             console.log(res.data.result)
+            console.log(res.data)
             context.commit('SET_PRODUCTS', res.data.result)
+            context.commit('SET_PAGINATION', res.data.pagination)
           })
           .catch(err => console.log(err))
       })
@@ -120,7 +122,8 @@ export const store = new Vuex.Store({
         axios.post(`${process.env.VUE_APP_BASE_URL}/api/v1/product`, payload)
           .then(res => {
             console.log(res.data.result)
-            resolve(res.data.result.products)
+            // resolve(res.data.result.products)
+            resolve(res.data.result)
           })
           .catch(err => reject(err))
       })
@@ -131,7 +134,8 @@ export const store = new Vuex.Store({
         axios.patch(`${process.env.VUE_APP_BASE_URL}/api/v1/product/` + payload.id, payload.data)
           .then(res => {
             console.log(res.data.result)
-            resolve(res.data.result.products)
+            // resolve(res.data.result.products)
+            resolve(res.data.result)
           })
           .catch(err => reject(err))
       })
@@ -238,6 +242,9 @@ export const store = new Vuex.Store({
     },
     allUser (state) {
       return state.allUser
+    },
+    get_page (state) {
+      return state.pagination
     }
   },
   modules: {

@@ -1,19 +1,19 @@
 <template>
-    <div class="sidebar">
+    <div class="sidebar navbar-nav">
         <div class="p-3 img-drop tex-center">
-            <a href="#">
+            <router-link to="/home">
                 <img class="mx-auto d-block" src="../assets/fork.png">
-            </a>
+            </router-link>
         </div>
         <div class="p-3 img-drop">
-            <a href="#">
+            <router-link to="/history">
                 <img class="image" src="../assets/clipboard.png">
-            </a>
+            </router-link>
         </div>
         <div class="p-3 img-drop">
-            <a href="#">
+            <router-link to="/product">
                 <img class="image" src="../assets/add.png">
-            </a>
+            </router-link>
         </div>
         <div class="p-4 img-drop">
             <router-link to="/login">
