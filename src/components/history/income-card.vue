@@ -1,5 +1,5 @@
 <template>
-    <div class="record m-4" style="border:1px solid yellow;">
+    <div class="record m-4">
         <div class="row d-flex">
             <div class="col-lg-4 col-md-6 col-sm-12 my-3">
                 <div class="card">
@@ -39,9 +39,12 @@ export default {
 </script>
 
 <style scoped>
-    .card-body {
-        background: linear-gradient(285.38deg, #FBB2B4 30.05%, rgba(255, 143, 178, 0) 133.19%);
-        filter: drop-shadow(10px 15px 10px rgba(255, 143, 178, 0.25));
-        border-radius: 10px;
-    }
+.card {
+    border-radius: 10px;
+}
+.card-body {
+    background: linear-gradient(285.38deg, #FBB2B4 30.05%, rgba(255, 143, 178, 0) 133.19%);
+    filter: drop-shadow(10px 15px 10px rgba(255, 143, 178, 0.25));
+    border-radius: 10px;
+}
 </style>

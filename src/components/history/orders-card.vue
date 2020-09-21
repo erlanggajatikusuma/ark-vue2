@@ -1,5 +1,5 @@
 <template>
-    <div class="orders m-4" style="border:1px solid yellow;">
+    <div class="orders m-4">
         <div class="row d-flex">
             <div class="col-lg-12">
                 <div class="recent-order">
@@ -11,9 +11,9 @@
                         </div> -->
                     </div>
                     <div class="order-data">
-                        <table class="table bg-success">
-                            <thead class="bg-info">
-                            <tr class="bg-danger">
+                        <table class="table">
+                            <thead>
+                            <tr>
                                 <th>Id</th>
                                 <th>Invoices</th>
                                 <th>Cashier</th>
@@ -84,6 +84,6 @@ export default {
 }
 
 tbody tr {
-    color: #CECECE;
+    color: #4764e6;
 }
 </style>

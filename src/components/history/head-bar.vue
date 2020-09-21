@@ -20,6 +20,7 @@ export default {
         display: flex;
         background: #FFFFFF;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+        width: 100%;
         height: 100px;
     }
     .banner {
@@ -27,8 +28,6 @@ export default {
         width: 100%;
         align-items: center;
         padding: 0 30px;
-        background: #FFFFFF;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
     }
     .banner h2 {
         display: block;

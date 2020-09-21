@@ -1,5 +1,5 @@
 <template>
-    <div class="graph-wrapper">
+    <div class="graph-wrapper m-4">
          <div class="mx-5 d-flex justify-content-between">
             <h3>Revenue</h3>
             <div class="dropdown">
@@ -31,8 +31,8 @@
             <h3 class="box-title">Activity Data</h3>
         </div>
         <!-- Box Header -->
-        <div class="box-body bg-dark">
-            <lineChart/>
+        <div class="box-body p-4">
+            <lineChart />
         </div>
     </div>
 </template>
@@ -48,4 +48,8 @@ export default {
 </script>
 
 <style scoped>
+.graph-wrapper {
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+}
 </style>
