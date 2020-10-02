@@ -1,25 +1,5 @@
 # ark-cafe
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 <br />
@@ -63,7 +43,6 @@ Arkcafe is a application whose purpose is to help people who have a shop / cafe 
 ### Built With
 
 * [VueJS](http://vuejs.org/)
-<!-- * [Vue Bootstrap](https://bootstrap-vue.org/) -->
 * [Vue ChartJS](https://vue-chartjs.org/)
 
 <!-- GETTING STARTED -->
@@ -101,12 +80,12 @@ npm run build
 <!-- ROADMAP -->
 ## Screenshots
 
-<!-- <p align='center'>
+<p align='center'>
   <span>
       <image width="200" src='./screenshots/landing.png' />
       <image width="200" src='./screenshots/login.png' />
-      <image width="200" src='./screenshots/regis.png' />
-      <image width="200" src='./screenshots/home.png' />
+      <image width="200" src='./screenshots/register.png' />
+      <!-- <image width="200" src='./screenshots/home.png' />
       <image width="200" src='./screenshots/homecart.png' />
       <image width="200" src='./screenshots/history.png' />
       <image width="200" src='./screenshots/chartday.png' />
@@ -114,9 +93,9 @@ npm run build
       <image width="200" src='./screenshots/categories.png' />
       <image width="200" src='./screenshots/users.png' />
       <image width="200" src='./screenshots/profile.png' />
-      <image width="200" src='./screenshots/checkout.png' />
+      <image width="200" src='./screenshots/checkout.png' /> -->
   </span>
- </p> -->
+ </p>
  
 ## Related Project
 * [`ark-backend`](https://github.com/erlanggajatikusuma/ark-backend)
