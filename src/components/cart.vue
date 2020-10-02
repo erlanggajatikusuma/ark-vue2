@@ -69,7 +69,7 @@ export default {
       })
     },
     clear () {
-      this.$store.dispatch('clearCart') // call actions
+      this.$store.dispatch('clearCart')
     },
     Checkout () {
       /* Random Invoice */
