@@ -36,9 +36,8 @@ export default {
     sorter (e) {
       const url = `?sort=${e.target.value}`
       console.log(e.target.value)
-      // this.feature(url)
       this.getProducts(url)
-      this.active = !this.active
+      this.active = false
     },
     handlePage (number) {
       console.log(number)
@@ -47,16 +46,12 @@ export default {
     }
   },
   computed: {
-    // products () {
-    //   return this.$store.getters.productsG
-    // } using single getters
     ...mapGetters({
       products: 'productsG',
       paginations: 'get_page'
     })
   },
   mounted () {
-    // this.$store.dispatch('getProducts') using single actions
     this.getProducts()
   }
 }

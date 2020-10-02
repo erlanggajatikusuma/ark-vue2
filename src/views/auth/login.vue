@@ -1,7 +1,7 @@
 <template>
         <div class="login-container d-flex align-items-center justify-content-center">
           <form class="login-form text-center">
-            <h1 class="font-weight-light text-uppercase mb-5">Login</h1>
+            <h1 class="font-weight-light text-uppercase mb-5 text">Login</h1>
             <div class="form-group">
               <input type="email" placeholder="email" class="form-control rounded-pill form-control-lg" v-model="email">
             </div>
@@ -9,7 +9,7 @@
               <input type="password" placeholder="password" class="form-control rounded-pill form-control-lg" v-model="password">
             </div>
             <button type="submit" class="btn btn-primary btn-block rounded-pill btn-lg mt-5" @click="handleLogin">LOGIN</button>
-            <p class="mt-3 font-weight-normal">Not registered? <router-link to="/register"><strong>Register Now</strong></router-link></p>
+            <p class="mt-3 font-weight-normal h6 text">Not registered? <router-link to="/register"><strong style="color: #a0b4f7;">Register Now</strong></router-link></p>
           </form>
         </div>
 </template>
@@ -45,10 +45,12 @@ export default {
   .login-container {
     width: 100%;
     height: 100vh;
-
+    position: relative;
+    background: url('../product/3061577.jpg');
+    background-size: cover;
+    background-position: center;
     font-family: sans-serif;
     font-size: 14px;
-    background: #eee;
     color: #666;
   }
   .login-form {
@@ -69,5 +71,8 @@ export default {
   .form-control:focus{
     border-color: #723dbe;
     box-shadow: 0 0 0 0.2rem rgba(114, 61, 190, .25);
+  }
+  .text {
+    color: white;
   }
 </style>

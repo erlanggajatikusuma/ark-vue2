@@ -3,7 +3,7 @@
         <div class="card-content my-3">
             <a href="#">
               <div class="img-one">
-                <img :src="data.image" class="card-img" @click="addToCart">
+                <img :src="data.image" class="card-img" @click.prevent="addToCart">
               </div>
               <!-- <div class="img-two" @click="selected= !selected">
                 <img v-if="selected" src="../assets/tick (1).png">
