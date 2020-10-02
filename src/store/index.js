@@ -14,7 +14,8 @@ export const store = new Vuex.Store({
     token: localStorage.getItem('token') || null,
     roleId: localStorage.getItem('roleId') || null,
     allUser: [],
-    pagination: {}
+    pagination: {},
+    invoice: ''
   },
   mutations: {
     SET_PRODUCTS (state, payload) {
@@ -50,6 +51,15 @@ export const store = new Vuex.Store({
     },
     SET_PAGINATION (state, payload) {
       state.pagination = payload
+    },
+    GENERATE_INVOICE (state) {
+      const d = new Date()
+      const day = d.getDate().toString()
+      const month = (d.getMonth() + 1).toString()
+      const year = d.getFullYear().toString().split('').splice(2, 3).join('')
+      const rnd = Math.random(0, 100).toString().substr(14).toString()
+      const invoice = day + month + year + rnd
+      state.invoice = invoice
     }
   },
   actions: {
@@ -222,6 +232,9 @@ export const store = new Vuex.Store({
     },
     get_page (state) {
       return state.pagination
+    },
+    get_invoice (state) {
+      return state.invoice
     }
   },
   modules: {
