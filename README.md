@@ -85,9 +85,9 @@ npm run build
       <image width="200" src='./screenshots/landing.png' />
       <image width="200" src='./screenshots/login.png' />
       <image width="200" src='./screenshots/register.png' />
-      <!-- <image width="200" src='./screenshots/home.png' />
-      <image width="200" src='./screenshots/homecart.png' />
-      <image width="200" src='./screenshots/history.png' />
+      <image width="200" src='./screenshots/home.png' />
+      <image width="200" src='./screenshots/cart.png' />
+      <!-- <image width="200" src='./screenshots/history.png' />
       <image width="200" src='./screenshots/chartday.png' />
       <image width="200" src='./screenshots/products.png' />
       <image width="200" src='./screenshots/categories.png' />
