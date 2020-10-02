@@ -92,8 +92,8 @@ npm run build
       <image width="200" src='./screenshots/products.png' />
       <image width="200" src='./screenshots/categories.png' />
       <image width="200" src='./screenshots/users.png' />
-      <image width="200" src='./screenshots/profile.png' />
-      <image width="200" src='./screenshots/checkout.png' /> -->
+      <image width="200" src='./screenshots/profile.png' /> -->
+      <image width="200" src='./screenshots/checkout.png' />
   </span>
  </p>
  

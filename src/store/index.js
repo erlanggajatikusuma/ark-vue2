@@ -91,7 +91,6 @@ export const store = new Vuex.Store({
     getProducts (context, payload) {
       return new Promise((resolve, reject) => {
         axios.get(`${process.env.VUE_APP_BASE_URL}/api/v1/product${payload || ''}`)
-        // axios.get('http://localhost:3000/api/v1/product?limit=50')
           .then(res => {
             console.log(res.data.result)
             console.log(res.data)
@@ -103,7 +102,6 @@ export const store = new Vuex.Store({
     },
     insertProduct (context, payload) {
       return new Promise((resolve, reject) => {
-        // axios.post('http://localhost:3000/api/v1/product', payload)
         axios.post(`${process.env.VUE_APP_BASE_URL}/api/v1/product`, payload)
           .then(res => {
             console.log(res.data.result)

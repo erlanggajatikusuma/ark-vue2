@@ -21,11 +21,21 @@ const mutations = {
 const actions = {
   getHistories (context) {
     return new Promise((resolve, reject) => {
-    //   axios.get(`${process.env.VUE_APP_BASE_URL}api/v1/history`)
-      axios.get('http://localhost:3000/api/v1/history')
+      axios.get(`${process.env.VUE_APP_BASE_URL}/api/v1/history`)
         .then(res => {
           console.log(res.data.result)
           context.commit('SET_HISTORIES', res.data.result)
+        })
+        .catch(err => console.log(err))
+    })
+  },
+  postHistory (context, payload) {
+    console.log(payload)
+    return new Promise((resolve, reject) => {
+      axios.post(`${process.env.VUE_APP_BASE_URL}/api/v1/history`, payload)
+        .then(res => {
+          console.log(res.data.result)
+          resolve(res.data.result)
         })
         .catch(err => console.log(err))
     })

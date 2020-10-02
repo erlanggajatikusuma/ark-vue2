@@ -23,7 +23,7 @@
           </div>
           <span class="d-flex m-2 font-weight-bold" v-if="total > 0">*Belum Termasuk ppn</span>
           <div class="checkout-btn" v-if="total > 0">
-            <button class="btn btn-two font-weight-bold py-2 mb-2 btn-block" data-toggle="modal" data-target="#modalCheckout">
+            <button class="btn btn-two font-weight-bold py-2 mb-2 btn-block" data-toggle="modal" data-target="#modalCheckout" @click="Checkout">
               Checkout
             </button>
             <button class="btn btn-one font-weight-bold py-2 btn-block" @click="clear">
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import cartHead from './cart-head'
 import emptyCart from './emptyCart'
 import modalCheckout from './modal'
@@ -53,6 +53,7 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['postHistory']),
     inc (id) {
       this.quantity.forEach(q => {
         if (q.id === id) {
@@ -69,6 +70,33 @@ export default {
     },
     clear () {
       this.$store.dispatch('clearCart') // call actions
+    },
+    Checkout () {
+      /* Random Invoice */
+      const d = new Date()
+      const day = d.getDate().toString()
+      const month = (d.getMonth() + 1).toString()
+      const year = d.getFullYear().toString().split('').splice(2, 3).join('')
+      const rnd = Math.random(0, 100).toString().substr(14).toString()
+      const invoice = day + month + year + rnd
+      console.log(invoice)
+      /* Orders */
+      const productName = []
+      this.items.map(item => {
+        console.log(item.name)
+        productName.push(item.name)
+      })
+      console.log(productName)
+      /* Amount */
+      const totalPrice = this.price + this.ppn
+      console.log(totalPrice)
+      const data = {
+        cashier: 'Maya',
+        invoice: `#${invoice}`,
+        orders: productName.join(', '),
+        amount: totalPrice
+      }
+      this.postHistory(data)
     }
   },
   computed: {
