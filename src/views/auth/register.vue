@@ -4,14 +4,17 @@
             <h1 class="font-weight-light text-uppercase mb-5 text">Register</h1>
             <div class="form-group">
               <input type="text" placeholder="First name" required class="form-control form-control-lg" v-model="$v.firstName.$model">
-              <span v-if="$v.firstName.$error" class="validation">First name required</span>
+              <span v-if="$v.firstName.$error" class="validation">First name min 3 characters</span>
             </div>
             <div class="form-group">
               <input type="text" placeholder="Last name" required class="form-control form-control-lg" v-model="$v.lastName.$model">
-              <span v-if="$v.lastName.$error" class="validation">Last name required</span>
+              <span v-if="$v.lastName.$error" class="validation">Last name min 3 characters</span>
             </div>
             <div class="form-group">
-              <input type="email" placeholder="Email" required class="form-control form-control-lg" v-model="email">
+              <input type="email" placeholder="Email"
+              class="form-control form-control-lg"
+              v-model="email"
+              >
             </div>
             <div class="form-group">
                 <div class="input-group">
@@ -51,10 +54,12 @@ export default {
   },
   validations: {
     firstName: {
-      required
+      required,
+      minLength: minLength(3)
     },
     lastName: {
-      required
+      required,
+      minLength: minLength(3)
     },
     password: {
       required,
@@ -81,8 +86,11 @@ export default {
           if (err.response.status === 411) {
             this.failed('Password min 6 characters')
           }
-          if (err.response.status === 400) {
+          if (err.response.status === 403) {
             this.failed('Email invalid')
+          }
+          if (err.response.status === 400) {
+            this.failed('Name cannot be empty')
           }
         })
     },
@@ -93,19 +101,6 @@ export default {
       this.display = !this.display
     }
   }
-  //   email: {
-  //     required,
-  //     email,
-  //     isUnique (value) {
-  //       if (value === '') return true
-  //       const emailRegex = /^(([^<>()\\.,;:\s@"]+(\.[^<>()\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-  //       return new Promise(resolve => {
-  //         setTimeout(() => {
-  //           resolve(emailRegex.test(value))
-  //         }, 350 + Math.random() * 300)
-  //       })
-  //     }
-  //   }
 }
 </script>
 
