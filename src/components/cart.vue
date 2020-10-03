@@ -34,7 +34,7 @@
             </button>
           </div>
         </div>
-        <modalCheckout v-show="show"/>
+        <modalCheckout v-show="show" @close="closeModal"/>
     </div>
 </template>
 
@@ -109,6 +109,10 @@ export default {
         }
         this.postHistory(data)
       })
+    },
+    closeModal () {
+      this.show = !this.show
+      this.clear()
     }
   },
   computed: {

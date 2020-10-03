@@ -4,6 +4,11 @@
         <div class="modal" id="modalCheckout">
             <div class="modal-dialog">
             <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close">
+                        <span aria-hidden="true" @click="$emit('close')">&times;</span>
+                    </button>
+                </div>
                 <div class="modal-body">
                     <div class="modal-head d-flex justify-content-between">
                         <h5 class="modal-title font-weight-bold">Checkout</h5>
