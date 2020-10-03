@@ -5,8 +5,8 @@
             </div>
             <h2>Food Items</h2>
             <div>
-                <input type="text" placeholder="Search..." v-on:keyup="searching" v-show="showSearch">
-                <img class="img-head mx-3" src="../assets/magnifying-glass.png" v-show="!showSearch">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                <input type="text" placeholder="Search..." v-on:keyup="searching">
             </div>
         </div>
 </template>
@@ -15,11 +15,6 @@
 import { mapActions } from 'vuex'
 export default {
   name: 'HeadBar',
-  data () {
-    return {
-      showSearch: false
-    }
-  },
   methods: {
     ...mapActions(['feature']),
     searching (e) {
@@ -42,5 +37,14 @@ export default {
     }
     .img-head:hover {
         cursor: pointer;
+    }
+    input[type=text] {
+      padding-left: 23px;
+      border: none;
+      border-bottom: 1px solid rgba(46, 106, 126, 0.5);
+      outline:none;
+    }
+    i {
+      position: absolute;
     }
 </style>
