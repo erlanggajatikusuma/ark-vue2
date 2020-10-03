@@ -58,11 +58,13 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import mixins from '../../components/mixins/swal'
 import modalProduct from './modal'
 import delModal from './delModal'
 import pagination from '../../components/pagination'
 export default {
   name: 'Product',
+  mixins: [mixins],
   components: {
     modalProduct,
     delModal,
@@ -121,7 +123,12 @@ export default {
         .then(res => {
           this.clearData()
           this.getProducts()
-          alert('Data successfully added')
+          this.success('center', 'success', 'Data successfully added')
+        })
+        .catch(err => {
+          if (err.response.status === 500) {
+            this.failed('File max 2 mb')
+          }
         })
     },
     editData (product) {
@@ -135,20 +142,23 @@ export default {
       this.modalsData.idCategory = product.idCategory
     },
     updateData () {
-      console.log('Data successfully updated')
       const fd = new FormData()
       fd.append('image', this.modalsData.image)
       fd.append('name', this.modalsData.name)
       fd.append('price', this.modalsData.price)
       fd.append('idStatus', this.modalsData.idStatus)
       fd.append('idCategory', this.modalsData.idCategory)
-      console.log(fd)
       const data = { id: this.modalsData.id, data: fd }
       this.updateProduct(data)
         .then(res => {
+          this.success('center', 'success', 'Data successfully Updated')
           this.clearData()
           this.getProducts()
-          alert('Data successfully Updated')
+        })
+        .catch(err => {
+          if (err.response.status === 500) {
+            this.failed('File max 2 mb')
+          }
         })
     },
     dataHandler () {

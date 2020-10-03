@@ -16,8 +16,10 @@
 
 <script>
 import { mapActions } from 'vuex'
+import mixins from '../../components/mixins/swal'
 export default {
   name: 'Login',
+  mixins: [mixins],
   data () {
     return {
       email: '',
@@ -34,6 +36,15 @@ export default {
       this.login(data)
         .then(() => {
           this.$router.push('/home')
+        })
+        .catch(err => {
+          console.log(err)
+          if (err.response.status === 401) {
+            this.failed('Incorrect password')
+          }
+          if (err.response.status === 404) {
+            this.failed('Email not registered')
+          }
         })
     },
     ...mapActions(['login'])

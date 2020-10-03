@@ -33,9 +33,11 @@
 
 <script>
 import { mapActions } from 'vuex'
+import mixins from '../../components/mixins/swal'
 import { required, minLength } from 'vuelidate/lib/validators'
 export default {
   name: 'Register',
+  mixins: [mixins],
   data () {
     return {
       type: 'password',
@@ -71,6 +73,17 @@ export default {
       this.register(data)
         .then(() => {
           this.$router.push('/login')
+        })
+        .catch(err => {
+          if (err.response.status === 409) {
+            this.failed('Email already registered')
+          }
+          if (err.response.status === 411) {
+            this.failed('Password min 6 characters')
+          }
+          if (err.response.status === 400) {
+            this.failed('Email invalid')
+          }
         })
     },
     ...mapActions(['register']),

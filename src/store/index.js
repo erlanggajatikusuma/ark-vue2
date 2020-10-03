@@ -140,25 +140,18 @@ export const store = new Vuex.Store({
           .catch(err => reject(err))
       })
     },
-    login (setex, payload) {
-      console.log(payload)
+    login (context, payload) {
       return new Promise((resolve, reject) => {
         axios.post(`${process.env.VUE_APP_BASE_URL}/api/v1/user/login`, payload)
           .then(res => {
-            setex.commit('LOGIN_USER', res.data.result)
+            context.commit('LOGIN_USER', res.data.result)
             localStorage.setItem('token', res.data.result.token)
             localStorage.setItem('roleId', res.data.result.roleId)
             axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`
             resolve(res.data.result)
           })
           .catch(err => {
-            console.log(err)
-            if (err.response.status === 401) {
-              alert('incorrect email or password')
-            }
-            if (err.response.status === 404) {
-              alert('incorrect email or password')
-            }
+            reject(err)
           })
       })
     },
@@ -166,18 +159,13 @@ export const store = new Vuex.Store({
       setex.commit('logoutM')
       localStorage.removeItem('token')
     },
-    register (setex, payload) {
-      console.log(payload)
+    register (context, payload) {
       return new Promise((resolve, reject) => {
         axios.post(`${process.env.VUE_APP_BASE_URL}/api/v1/user/register`, payload)
           .then(res => {
             resolve(res.data)
           })
           .catch(err => {
-            console.log(err.response)
-            if (err.response.status === 409) {
-              alert('email already registered')
-            }
             reject(err)
           })
       })

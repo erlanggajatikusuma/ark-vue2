@@ -1,5 +1,21 @@
 export default {
   methods: {
+    success (position, icon, title) {
+      this.$swal({
+        position: position,
+        icon: icon,
+        title: title,
+        showConfirmButton: false,
+        timer: 1800
+      })
+    },
+    failed (text) {
+      this.$swal({
+        icon: 'error',
+        title: 'Oops...',
+        text: text
+      })
+    },
     confirmSwal (title, desc, icon, cb) {
       this.$swal({
         title: title,
