@@ -46,13 +46,15 @@ export default {
 
 <style scoped>
     .card {
-        width: 250px;
+        /* width: 250px; */
+        width: 26%;
         background: transparent;
         border: transparent;
     }
     .card-img {
         border-radius: 10px;
-        width: 250px;
+        /* width: 250px; */
+        width: 100%;
         height: 200px;
         object-fit: cover;
         cursor: pointer;
@@ -69,4 +71,19 @@ export default {
       width: 250px;
       height: 200px;
     } */
+    @media screen and (max-width: 1200px) {
+      .card {
+        width: 40%;
+      }
+    }
+    @media screen and (max-width: 995px) {
+      .card {
+        width: 80%;
+      }
+    }
+    @media screen and (max-width: 670px) {
+      .card {
+        width: 70%;
+      }
+    }
 </style>
