@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <div class="form-group row col-lg-2 col-md-2 col-sm-2 mx-3 mt-3">
-          <select class="form-control" name="sort" id="sort" @change="sorter">
+          <select class="form-control" name="sort" id="sort" @change="sorter" style="width:100px">
             <option value="" selected>Sort by</option>
             <option value="name">Name</option>
             <option value="price">Price</option>
@@ -10,7 +10,7 @@
       <div class="row">
         <cardProduct :data="product" v-for="product in products" :key="product.id"/>
       </div>
-      <div class="page bg-dark d-flex">
+      <div class="page d-flex">
         <pagination v-show="active" :data="paginations" @event-page="handlePage"/>
       </div>
     </div>
