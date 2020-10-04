@@ -12,10 +12,9 @@
                 <div class="modal-body">
                     <div class="modal-head d-flex justify-content-between">
                         <h5 class="modal-title font-weight-bold">Checkout</h5>
-                        <!-- <span class="h6 font-weight-bold">Receipt no: #010410919</span> -->
                         <span class="h6 font-weight-bold">Receipt no: #{{invoice}}</span>
                     </div>
-                    <small class="h6 mb-5 d-flex">Cashier: Pevita Pearce</small>
+                    <small class="h6 mb-5 d-flex">Cashier: {{cashier}}</small>
                         <div class="print-list mt-5">
                             <div class="item-checkout" v-for="item in items" :key="item.id">
                                 <span>{{item.name}} x {{item.qty}} </span>
@@ -56,7 +55,8 @@ export default {
       items: 'itemsG',
       price: 'price',
       ppn: 'ppn',
-      invoice: 'get_invoice'
+      invoice: 'get_invoice',
+      cashier: 'get_cashier'
     })
   }
 }

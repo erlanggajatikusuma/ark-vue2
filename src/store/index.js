@@ -15,10 +15,8 @@ export const store = new Vuex.Store({
     token: localStorage.getItem('token') || null,
     roleId: localStorage.getItem('roleId') || null,
     pagination: {},
-    cartCheckout: {
-      cashier: ''
-    },
-    invoice: ''
+    invoice: '',
+    cashier: ''
   },
   mutations: {
     SET_PRODUCTS (state, payload) {
@@ -61,9 +59,16 @@ export const store = new Vuex.Store({
       const invoice = day + month + year + rnd
       state.invoice = invoice
     },
-    CART_TO_CHECKOUT (state, payload) {
-      // state.cartCheckout.invoice = payload.invoice
-      state.cartCheckout.cashier = payload.cashier
+    CASHIER (state) {
+      const name = () => {
+        const cashiers = ['Andi', 'Maya', 'Agus', 'Sinta']
+        const randomize = []
+        for (let i = 0; i < 1; i++) {
+          randomize.push(cashiers.splice(Math.floor(Math.random() * cashiers.length), 1))
+        }
+        return randomize.toString()
+      }
+      state.cashier = name()
     }
   },
   actions: {
@@ -212,6 +217,9 @@ export const store = new Vuex.Store({
     },
     get_invoice (state) {
       return state.invoice
+    },
+    get_cashier (state) {
+      return state.cashier
     }
   },
   modules: {

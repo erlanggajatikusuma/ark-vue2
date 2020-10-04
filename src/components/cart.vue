@@ -23,9 +23,6 @@
           </div>
           <span class="d-flex m-2 font-weight-bold" v-if="total > 0">*Belum Termasuk ppn</span>
           <div class="checkout-btn" v-if="total > 0">
-            <!-- <button class="btn btn-two font-weight-bold py-2 mb-2 btn-block" data-toggle="modal" data-target="#modalCheckout" @click="Checkout">
-              Checkout
-            </button> -->
             <button class="btn btn-two font-weight-bold py-2 mb-2 btn-block" @click="Checkout">
               Checkout
             </button>
@@ -60,7 +57,7 @@ export default {
   },
   methods: {
     ...mapActions(['postHistory']),
-    ...mapMutations(['CART_TO_CHECKOUT', 'GENERATE_INVOICE']),
+    ...mapMutations(['CART_TO_CHECKOUT', 'GENERATE_INVOICE', 'CASHIER']),
     inc (id) {
       this.quantity.forEach(q => {
         if (q.id === id) {
@@ -82,31 +79,22 @@ export default {
     },
     Checkout () {
       this.confirmSwal('Checkout', 'Want to checkout ?', 'question', () => {
-        // this.SAVE_CART_TO_MODAL({
-        //   products: this.carts,
-        //   price: this.cartTotalPrice
         this.show = !this.show
         /* Random Invoice */
-        // const d = new Date()
-        // const day = d.getDate().toString()
-        // const month = (d.getMonth() + 1).toString()
-        // const year = d.getFullYear().toString().split('').splice(2, 3).join('')
-        // const rnd = Math.random(0, 100).toString().substr(14).toString()
-        // const invoice = day + month + year + rnd
         this.GENERATE_INVOICE()
-        console.log(this.GENERATE_INVOICE)
         /* Orders */
         const productName = []
         this.items.map(item => {
           console.log(item.name)
           productName.push(item.name)
         })
-        console.log(productName)
+        /* Cashier */
+        this.CASHIER()
         /* Amount */
         const totalPrice = this.price + this.ppn
         console.log(totalPrice)
         const data = {
-          cashier: 'Maya',
+          cashier: this.cashier,
           invoice: `#${this.invoice}`,
           orders: productName.join(', '),
           amount: totalPrice
@@ -126,7 +114,7 @@ export default {
       price: 'price',
       ppn: 'ppn'
     }),
-    ...mapState(['invoice']),
+    ...mapState(['invoice', 'cashier']),
     total () {
       return this.qty
     }
