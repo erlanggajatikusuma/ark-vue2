@@ -1,7 +1,12 @@
 <template>
     <div>
         <div class="row bg-dark">
-            <div class="col-lg-12">
+            <div class="col-lg-12 d-flex">
+              <div class="img-wrapper">
+                <router-link to="/home">
+                  <img src="../../assets/keyboard-left-arrow-button.png">
+                </router-link>
+              </div>
                 <p class="text-center text-light display-4 pt-2">User Data</p>
             </div>
         </div>
@@ -38,8 +43,8 @@
                       <td>{{user.firstName}} {{user.lastName}}</td>
                       <td>{{user.email}}</td>
                       <td>{{user.roleId}}</td>
-                      <td><a href="#" class="text-success" @click="edit(user)">Edit</a></td>
-                      <td><a href="#" class="text-danger" @click="getId(user.id);del()">Delete</a></td>
+                      <td><a href="#" class="text-success" @click.prevent="edit(user)">Edit</a></td>
+                      <td><a href="#" class="text-danger" @click.prevent="getId(user.id);del()">Delete</a></td>
                     </tr>
                   </tbody>
                 </table>
@@ -138,5 +143,12 @@ export default {
 </script>
 
 <style scoped>
-
+.img-wrapper {
+  padding-top: 45px;
+  padding-bottom: 45px;
+  padding-left: 45px;
+}
+.text-center {
+  margin: auto;
+}
 </style>

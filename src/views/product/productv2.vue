@@ -1,8 +1,13 @@
 <template>
     <div id="products">
         <div class="row bg-dark">
-            <div class="col-lg-12">
-                <p class="text-center text-light display-4 pt-2">Product Data</p>
+            <div class="col-lg-12 d-flex">
+              <div class="img-wrapper">
+                <router-link to="/home">
+                  <img src="../../assets/keyboard-left-arrow-button.png">
+                </router-link>
+              </div>
+              <p class="text-center text-light display-4 pt-2">Product Data</p>
             </div>
         </div>
 
@@ -12,7 +17,7 @@
               <h3 class="text-info text-left">Products</h3>
             </div>
             <div class="col-lg-6">
-              <button type="button" class="btn btn-primary float-right" @click="toggle">
+              <button type="button" class="btn btn-primary float-right" @click.prevent="toggle">
                 Add new product
               </button>
             </div>
@@ -40,8 +45,8 @@
                       <td>Rp. {{product.price}}</td>
                       <td>{{product.idCategory}}</td>
                       <td>{{product.idStatus}}</td>
-                      <td><a href="#" class="text-success" @click="editData(product)">Edit</a></td>
-                      <td><a href="#" class="text-danger" @click="delProduct(product.id)">Delete</a></td>
+                      <td><a href="#" class="text-success" @click.prevent="editData(product)">Edit</a></td>
+                      <td><a href="#" class="text-danger" @click.prevent="delProduct(product.id)">Delete</a></td>
                     </tr>
                   </tbody>
                 </table>
@@ -175,7 +180,13 @@ export default {
         .then(res => {
           this.clearData()
           this.getProducts()
-          alert('Data successfully deleted')
+          this.$swal({
+            position: 'center',
+            icon: 'success',
+            title: 'Data successfully deleted',
+            showConfirmButton: false,
+            timer: 1500
+          })
         })
     },
     handlePage (number) {
@@ -197,7 +208,16 @@ export default {
 </script>
 
 <style scoped>
+#products {
+  width: 100%;
+}
 .page {
   margin: auto;
+}
+.text-center {
+  margin: auto;
+}
+.img-wrapper {
+  padding: 45px 0px 45px 45px;
 }
 </style>

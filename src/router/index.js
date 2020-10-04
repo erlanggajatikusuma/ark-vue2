@@ -2,12 +2,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Main from '../views/index.vue'
 import Home from '../views/Home.vue'
-// import Product from '../views/product/product.vue'
 import Product from '../views/product/productv2.vue'
 import History from '../views/history.vue'
 import Register from '../views/auth/register.vue'
 import Login from '../views/auth/login.vue'
-import Profile from '../views/auth/components/profile.vue'
 import User from '../views/user/user.vue'
 import { store } from '../store/index'
 
@@ -37,20 +35,6 @@ const routes = [
     component: History
   },
   {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
-  // {
-  //   path: '/product',
-  //   name: 'Product',
-  //   component: Product,
-  //   meta: { requiresAdmin: true }
-  // },
-  {
     path: '/product',
     name: 'Product',
     component: Product,
@@ -66,12 +50,6 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login,
-    meta: { requiresVisitor: true }
-  },
-  {
-    path: '/profile',
-    name: 'Profile',
-    component: Profile,
     meta: { requiresVisitor: true }
   }
 ]

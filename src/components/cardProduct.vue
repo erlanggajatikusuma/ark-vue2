@@ -2,7 +2,7 @@
     <div class="card ml-5 my-2">
         <div class="card-content my-3">
             <a href="#">
-              <div class="img-one">
+              <div class="img-one" v-active>
                 <img :src="data.image" class="card-img" @click.prevent="addToCart">
               </div>
               <!-- <div class="img-two" @click="selected= !selected">
@@ -22,6 +22,13 @@ export default {
   props: {
     data: {
       type: Object
+    }
+  },
+  directives: {
+    active: {
+      inserted: (el, binding) => {
+        el.style = ''
+      }
     }
   },
   data () {
@@ -58,6 +65,9 @@ export default {
         height: 200px;
         object-fit: cover;
         cursor: pointer;
+    }
+    .card-img:hover {
+      filter: brightness(60%);
     }
     /* .img-two {
       z-index: -1;

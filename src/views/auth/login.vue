@@ -3,12 +3,12 @@
           <form class="login-form text-center">
             <h1 class="font-weight-light text-uppercase mb-5 text">Login</h1>
             <div class="form-group">
-              <input type="email" placeholder="email" class="form-control rounded-pill form-control-lg" v-model="email">
+              <input type="email" placeholder="email" class="form-control form-control-lg" v-model="email">
             </div>
             <div class="form-group">
-              <input type="password" placeholder="password" class="form-control rounded-pill form-control-lg" v-model="password">
+              <input type="password" placeholder="password" class="form-control form-control-lg" v-model="password">
             </div>
-            <button type="submit" class="btn btn-primary btn-block rounded-pill btn-lg mt-5" @click="handleLogin">LOGIN</button>
+            <button type="submit" class="btn btn-primary btn-block btn-lg mt-5" @click="handleLogin">LOGIN</button>
             <p class="mt-3 font-weight-normal h6 text">Not registered? <router-link to="/register"><strong style="color: #a0b4f7;">Register Now</strong></router-link></p>
           </form>
         </div>
