@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex'
 import cartHead from './cart-head'
 import emptyCart from './emptyCart'
 import modalCheckout from './modal'
@@ -60,6 +60,7 @@ export default {
   },
   methods: {
     ...mapActions(['postHistory']),
+    ...mapMutations(['CART_TO_CHECKOUT', 'GENERATE_INVOICE']),
     inc (id) {
       this.quantity.forEach(q => {
         if (q.id === id) {
@@ -86,13 +87,14 @@ export default {
         //   price: this.cartTotalPrice
         this.show = !this.show
         /* Random Invoice */
-        const d = new Date()
-        const day = d.getDate().toString()
-        const month = (d.getMonth() + 1).toString()
-        const year = d.getFullYear().toString().split('').splice(2, 3).join('')
-        const rnd = Math.random(0, 100).toString().substr(14).toString()
-        const invoice = day + month + year + rnd
-        console.log(invoice)
+        // const d = new Date()
+        // const day = d.getDate().toString()
+        // const month = (d.getMonth() + 1).toString()
+        // const year = d.getFullYear().toString().split('').splice(2, 3).join('')
+        // const rnd = Math.random(0, 100).toString().substr(14).toString()
+        // const invoice = day + month + year + rnd
+        this.GENERATE_INVOICE()
+        console.log(this.GENERATE_INVOICE)
         /* Orders */
         const productName = []
         this.items.map(item => {
@@ -105,7 +107,7 @@ export default {
         console.log(totalPrice)
         const data = {
           cashier: 'Maya',
-          invoice: `#${invoice}`,
+          invoice: `#${this.invoice}`,
           orders: productName.join(', '),
           amount: totalPrice
         }
@@ -124,6 +126,7 @@ export default {
       price: 'price',
       ppn: 'ppn'
     }),
+    ...mapState(['invoice']),
     total () {
       return this.qty
     }

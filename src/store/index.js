@@ -15,6 +15,9 @@ export const store = new Vuex.Store({
     token: localStorage.getItem('token') || null,
     roleId: localStorage.getItem('roleId') || null,
     pagination: {},
+    cartCheckout: {
+      cashier: ''
+    },
     invoice: ''
   },
   mutations: {
@@ -57,6 +60,10 @@ export const store = new Vuex.Store({
       const rnd = Math.random(0, 100).toString().substr(14).toString()
       const invoice = day + month + year + rnd
       state.invoice = invoice
+    },
+    CART_TO_CHECKOUT (state, payload) {
+      // state.cartCheckout.invoice = payload.invoice
+      state.cartCheckout.cashier = payload.cashier
     }
   },
   actions: {
