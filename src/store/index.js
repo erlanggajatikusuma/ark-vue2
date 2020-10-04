@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import history from './history'
+import users from './users'
 
 Vue.use(Vuex)
 axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`
@@ -13,7 +14,6 @@ export const store = new Vuex.Store({
     items: [],
     token: localStorage.getItem('token') || null,
     roleId: localStorage.getItem('roleId') || null,
-    allUser: [],
     pagination: {},
     invoice: ''
   },
@@ -45,9 +45,6 @@ export const store = new Vuex.Store({
     },
     clearCart (state) {
       state.items = []
-    },
-    ALL_USER (state, payload) {
-      state.allUser = payload
     },
     SET_PAGINATION (state, payload) {
       state.pagination = payload
@@ -155,9 +152,10 @@ export const store = new Vuex.Store({
           })
       })
     },
-    logout (setex) {
-      setex.commit('logoutM')
+    logout (context) {
+      context.commit('logoutM')
       localStorage.removeItem('token')
+      localStorage.removeItem('roleId')
     },
     register (context, payload) {
       return new Promise((resolve, reject) => {
@@ -172,19 +170,6 @@ export const store = new Vuex.Store({
     },
     clearCart (context) {
       context.commit('clearCart')
-    },
-    getAllUser (context) {
-      axios.get(`${process.env.VUE_APP_BASE_URL}/api/v1/user/`)
-        .then(res => {
-          console.log(res.data)
-          context.commit('ALL_USER', res.data.result)
-        })
-        .catch(err => {
-          console.log(err)
-          if (err.response.status === 403) {
-            alert('Only admin')
-          }
-        })
     }
   },
   getters: {
@@ -215,9 +200,6 @@ export const store = new Vuex.Store({
       })
       return ppn
     },
-    allUser (state) {
-      return state.allUser
-    },
     get_page (state) {
       return state.pagination
     },
@@ -226,6 +208,7 @@ export const store = new Vuex.Store({
     }
   },
   modules: {
-    history
+    history,
+    users
   }
 })

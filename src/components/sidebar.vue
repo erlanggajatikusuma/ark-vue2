@@ -10,9 +10,14 @@
                 <img class="image" src="../assets/clipboard.png">
             </router-link>
         </div>
-        <div class="p-3 img-drop">
+        <div class="p-3 img-drop" v-if="roleId === '1'">
             <router-link to="/product">
                 <img class="image" src="../assets/add.png">
+            </router-link>
+        </div>
+        <div class="p-3 img-drop" v-if="roleId === '1'">
+            <router-link to="/user">
+                <img class="image" src="../assets/user.png">
             </router-link>
         </div>
         <div class="p-4 img-drop">
@@ -24,9 +29,16 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'Sidebar',
+  data () {
+    return {
+    }
+  },
+  computed: {
+    ...mapState(['roleId'])
+  },
   methods: {
     ...mapActions(['logout'])
   }
