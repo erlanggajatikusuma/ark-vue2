@@ -61,7 +61,7 @@ export const store = new Vuex.Store({
     },
     CASHIER (state) {
       const name = () => {
-        const cashiers = ['Andi', 'Maya', 'Agus', 'Sinta']
+        const cashiers = ['Andi', 'Maya', 'Agus', 'Sinta', 'Bagas', 'Putri']
         const randomize = []
         for (let i = 0; i < 1; i++) {
           randomize.push(cashiers.splice(Math.floor(Math.random() * cashiers.length), 1))

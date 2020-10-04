@@ -34,7 +34,9 @@
                             </tbody>
                         </table>
                     </div>
-
+                    <div class="page d-flex mx-auto">
+                        <pagination v-show="active" :data="paginations" @event-page="handlePage" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -43,14 +45,29 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import pagination from '../pagination'
 export default {
   name: 'ordersCard',
+  data () {
+    return {
+      active: true
+    }
+  },
+  components: {
+    pagination
+  },
   methods: {
-    ...mapActions(['getHistories'])
+    ...mapActions(['getHistories']),
+    handlePage (number) {
+      console.log(number)
+      const url = `?page=${number}`
+      this.getHistories(url)
+    }
   },
   computed: {
     ...mapGetters({
-      histories: 'get_histories'
+      histories: 'get_histories',
+      paginations: 'get_page_history'
     })
   },
   mounted () {

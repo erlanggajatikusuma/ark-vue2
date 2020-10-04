@@ -3,7 +3,8 @@ import axios from 'axios'
 const state = {
   histories: [],
   historiesIncome: [],
-  historiesMonth: []
+  historiesMonth: [],
+  paginationHistory: {}
 }
 
 const mutations = {
@@ -15,18 +16,22 @@ const mutations = {
   },
   SET_HISTORIES_MONTH (state, payload) {
     state.historiesMonth = payload
+  },
+  SET_PAGINATION_HISTORY (state, payload) {
+    state.paginationHistory = payload
   }
 }
 
 const actions = {
-  getHistories (context) {
+  getHistories (context, payload) {
     return new Promise((resolve, reject) => {
-      axios.get(`${process.env.VUE_APP_BASE_URL}/api/v1/history`)
+      axios.get(`${process.env.VUE_APP_BASE_URL}/api/v1/history${payload || ''}`)
         .then(res => {
-          console.log(res.data.result)
           context.commit('SET_HISTORIES', res.data.result)
+          context.commit('SET_PAGINATION_HISTORY', res.data.pagination)
+          resolve(res.data.result)
         })
-        .catch(err => console.log(err))
+        .catch(err => reject(err))
     })
   },
   postHistory (context, payload) {
@@ -45,6 +50,9 @@ const actions = {
 const getters = {
   get_histories (state) {
     return state.histories
+  },
+  get_page_history (state) {
+    return state.paginationHistory
   }
 }
 export default {
