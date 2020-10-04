@@ -70,7 +70,9 @@ export default {
     dec (id) {
       this.quantity.forEach(q => {
         if (q.id === id) {
-          q.qty--
+          if (q.qty > 1) {
+            q.qty--
+          }
         }
       })
     },
