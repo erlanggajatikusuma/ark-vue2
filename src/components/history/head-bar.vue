@@ -27,7 +27,7 @@ export default {
         display: flex;
         width: 100%;
         align-items: center;
-        padding: 0 30px;
+        padding-left: 34px
     }
     .banner h2 {
         display: block;

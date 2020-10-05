@@ -1,6 +1,6 @@
 <template>
     <div class="graph-wrapper m-4">
-         <div class="mx-5 d-flex justify-content-between">
+         <div class="mx-5 pt-4 d-flex justify-content-between">
             <h3>Revenue</h3>
             <div class="dropdown">
                 <button
@@ -27,22 +27,40 @@
                 </div>
             </div>
          </div>
-        <div class="box box-primary">
-            <h3 class="box-title">Activity Data</h3>
-        </div>
         <!-- Box Header -->
-        <div class="box-body p-4">
-            <lineChart />
+        <div class="box-body p-4" v-if="arrAmount.length > 0">
+            <line-chart :chartData="arrAmount" :options="chartOptions" label="Amount"></line-chart>
         </div>
     </div>
 </template>
 
 <script>
-import lineChart from './line-chart'
+import LineChart from './lineChart'
+import axios from 'axios'
+// import moment from 'moment'
 export default {
   name: 'graph',
   components: {
-    lineChart
+    LineChart
+  },
+  data () {
+    return {
+      arrAmount: [],
+      chartOptions: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    }
+  },
+  async created () {
+    const { data } = await axios.get(`${process.env.VUE_APP_BASE_URL}/api/v1/history?limit=1000`)
+    console.log(data.result)
+    data.result.forEach(d => {
+      const date = d.date
+      const { amount } = d
+
+      this.arrAmount.push({ date, total: amount })
+    })
   }
 }
 </script>

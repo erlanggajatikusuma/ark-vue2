@@ -18,11 +18,6 @@ export default {
     ordersCard,
     graph
   },
-  data () {
-    return {
-      active: true
-    }
-  },
   methods: {
     ...mapActions(['getHistories'])
   },
