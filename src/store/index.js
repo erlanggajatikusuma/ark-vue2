@@ -3,6 +3,10 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import history from './history'
 import users from './users'
+import router from '../router/index'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+
+import 'sweetalert2/src/sweetalert2.scss'
 
 Vue.use(Vuex)
 axios.defaults.headers.common.Authorization = `Bearer ${localStorage.getItem('token')}`
@@ -27,8 +31,13 @@ export const store = new Vuex.Store({
       state.token = payload.token
       state.roleId = payload.roleId
     },
-    logoutM (state) {
+    // logoutM (state) {
+    //   state.token = null
+    //   state.user = {}
+    // },
+    DELETE_USER (state) {
       state.token = null
+      state.user = {}
     },
     itemsM (state, payload) {
       const data = payload
@@ -83,11 +92,11 @@ export const store = new Vuex.Store({
           .catch(err => console.log(err))
       })
     },
-    interceptorsRequest (setex) {
-      console.log('interse')
+    interceptorRequest (context) {
+      console.log('interceptor Works !')
       axios.interceptors.request.use(function (config) {
         // Do something before request is sent
-        config.headers.Authorization = `Bearer ${setex.state.token}`
+        config.headers.Authorization = `Bearer ${context.state.token}`
         console.log(config)
         return config
       }, function (error) {
@@ -95,7 +104,7 @@ export const store = new Vuex.Store({
         return Promise.reject(error)
       })
     },
-    interceptorsResponse () {
+    interceptorResponse (context) {
       axios.interceptors.response.use(function (response) {
         // Any status code that lie within the range of 2xx cause this function to trigger
         // Do something with response data
@@ -103,7 +112,30 @@ export const store = new Vuex.Store({
       }, function (error) {
         // Any status codes that falls outside the range of 2xx cause this function to trigger
         // Do something with response error
-        console.log(error)
+        if (error.response.status === 401) {
+          if (error.response.data.result.message === 'token expired') {
+            localStorage.removeItem('token')
+            localStorage.removeItem('roleId')
+            context.commit('DELETE_USER')
+            router.push('/login')
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Maaf token session anda telah habis !'
+            })
+          }
+          if (error.response.data.result.message === 'token invalid') {
+            localStorage.removeItem('token')
+            localStorage.removeItem('roleId')
+            context.commit('DELETE_USER')
+            router.push('/login')
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Maaf token anda salah silahkan login kembali !'
+            })
+          }
+        }
         return Promise.reject(error)
       })
     },
@@ -115,6 +147,7 @@ export const store = new Vuex.Store({
             console.log(res.data)
             context.commit('SET_PRODUCTS', res.data.result)
             context.commit('SET_PAGINATION', res.data.pagination)
+            resolve(res.data.result)
           })
           .catch(err => console.log(err))
       })
@@ -165,7 +198,7 @@ export const store = new Vuex.Store({
       })
     },
     logout (context) {
-      context.commit('logoutM')
+      context.commit('DELETE_USER')
       localStorage.removeItem('token')
       localStorage.removeItem('roleId')
     },
@@ -220,6 +253,9 @@ export const store = new Vuex.Store({
     },
     get_cashier (state) {
       return state.cashier
+    },
+    get_roleId (state) {
+      return parseInt(state.roleId)
     }
   },
   modules: {
