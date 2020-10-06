@@ -6,7 +6,7 @@
                     <div class="card-body">
                         <h4>Today's Income</h4>
                         <h2>Rp. {{setDay}}</h2>
-                        <h4>+2% Yesterday</h4>
+                        <!-- <h4>+2% Yesterday</h4> -->
                     </div>
                 </div>
             </div>
@@ -15,7 +15,7 @@
                     <div class="card-body">
                         <h4>Orders</h4>
                         <h2>{{setOrders}}</h2>
-                        <h4>+2% Yesterday</h4>
+                        <!-- <h4>+2% Yesterday</h4> -->
                     </div>
                 </div>
             </div>
@@ -24,7 +24,7 @@
                     <div class="card-body">
                         <h4>This Year's Income</h4>
                         <h2>Rp. {{setYear}}</h2>
-                        <h4>+2% Yesterday</h4>
+                        <!-- <h4>+2% Yesterday</h4> -->
                     </div>
                 </div>
             </div>
