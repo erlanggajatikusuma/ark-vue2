@@ -9,7 +9,13 @@ import { mapActions } from 'vuex'
 export default {
   name: 'app',
   methods: {
-    ...mapActions(['interceptorsRequest'])
+    ...mapActions(['interceptorRequest', 'interceptorResponse'])
+  },
+  created () {
+    this.interceptorRequest()
+  },
+  mounted () {
+    this.interceptorResponse()
   }
 }
 </script>
