@@ -14,8 +14,9 @@ export default {
     }
   },
   mounted () {
-    const dates = this.chartData.map(d => d.date).reverse()
-    const totals = this.chartData.map(d => d.total).reverse()
+    const dates = this.dataChart.map(d => d.date)
+    const totals = this.dataChart.map(d => d.total)
+    console.log(this.chartData)
 
     this.renderChart({
       labels: dates,
@@ -24,6 +25,27 @@ export default {
         data: totals
       }]
     }, this.options)
+  },
+  computed: {
+    dataChart: function () {
+      return this.chartData
+    }
+  },
+  watch: {
+    chartData: function () {
+      this.$data._chart.destroy()
+      const dates = this.dataChart.map(d => d.date)
+      const totals = this.dataChart.map(d => d.total)
+      console.log(this.chartData)
+
+      this.renderChart({
+        labels: dates,
+        datasets: [{
+          label: this.label,
+          data: totals
+        }]
+      }, this.options)
+    }
   }
 
 }

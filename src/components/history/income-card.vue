@@ -40,7 +40,6 @@ export default {
   data () {
     return {
       arrToday: [],
-      // arrMonth: [],
       arrYear: [],
       orders: []
     }

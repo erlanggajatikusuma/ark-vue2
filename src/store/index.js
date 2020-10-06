@@ -97,7 +97,6 @@ export const store = new Vuex.Store({
       axios.interceptors.request.use(function (config) {
         // Do something before request is sent
         config.headers.Authorization = `Bearer ${context.state.token}`
-        console.log(config)
         return config
       }, function (error) {
         // Do something with request error
@@ -143,7 +142,6 @@ export const store = new Vuex.Store({
       return new Promise((resolve, reject) => {
         axios.get(`${process.env.VUE_APP_BASE_URL}/api/v1/product${payload || ''}`)
           .then(res => {
-            console.log(res.data.result)
             console.log(res.data)
             context.commit('SET_PRODUCTS', res.data.result)
             context.commit('SET_PAGINATION', res.data.pagination)

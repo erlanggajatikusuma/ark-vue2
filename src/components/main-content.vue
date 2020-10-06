@@ -11,7 +11,7 @@
         <cardProduct :data="product" v-for="product in products" :key="product.id"/>
       </div>
       <div class="page d-flex">
-        <pagination v-show="active" :data="paginations" @event-page="handlePage"/>
+        <pagination v-show="active" :data="paginations" @event-page="handlePage" />
       </div>
     </div>
 </template>
@@ -40,9 +40,11 @@ export default {
       this.active = false
     },
     handlePage (number) {
-      console.log(number)
       const url = `?page=${number}`
       this.getProducts(url)
+    },
+    paging (a) {
+      console.log(a)
     }
   },
   computed: {

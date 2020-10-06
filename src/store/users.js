@@ -25,9 +25,6 @@ const actions = {
       })
       .catch(err => {
         console.log(err)
-        if (err.response.status === 403) {
-          alert('Only admin')
-        }
       })
   },
   updateUser (context, payload) {

@@ -3,11 +3,13 @@
         <nav aria-label="...">
             <ul class="pagination">
                 <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                    <router-link class="page-link" to="#" tabindex="-1" aria-disabled="true">Prev</router-link>
                 </li>
-                <li class="page-item" :class="n==data.currentPage?'active':''" v-for="n in data.totalPage" :key="n"><a class="page-link" href="#" @click.prevent="$emit('event-page', n)">{{n}}</a></li>
+                <li class="page-item" :class="n==data.currentPage?'active':''" v-for="n in data.totalPage" :key="n">
+                    <a class="page-link" href="#" @click.prevent="$emit('event-page', n)">{{n}}</a>
+                </li>
                 <li class="page-item">
-                    <a class="page-link" href="#">Next</a>
+                    <router-link class="page-link" to="#">Next</router-link>
                 </li>
             </ul>
         </nav>

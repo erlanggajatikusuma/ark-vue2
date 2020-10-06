@@ -34,6 +34,15 @@ const actions = {
         .catch(err => reject(err))
     })
   },
+  getHistoriesChart (context) {
+    return new Promise((resolve, reject) => {
+      axios.get(`${process.env.VUE_APP_BASE_URL}/api/v1/history?limit=999999999`)
+        .then(res => {
+          resolve(res.data.result)
+        })
+        .catch(err => reject(err))
+    })
+  },
   postHistory (context, payload) {
     console.log(payload)
     return new Promise((resolve, reject) => {
@@ -42,7 +51,7 @@ const actions = {
           console.log(res.data.result)
           resolve(res.data.result)
         })
-        .catch(err => console.log(err))
+        .catch(err => reject(err))
     })
   }
 }
