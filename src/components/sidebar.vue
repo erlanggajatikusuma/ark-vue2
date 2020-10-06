@@ -29,11 +29,11 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Sidebar',
   computed: {
-    ...mapState(['roleId'])
+    ...mapGetters({ roleId: 'get_roleId' })
   },
   methods: {
     ...mapActions(['logout'])
