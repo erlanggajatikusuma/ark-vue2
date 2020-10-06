@@ -1,4 +1,4 @@
-# ark-cafe
+# Arkcafe
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
@@ -15,7 +15,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     <a href="https://github.com/AdmiralYuuShi/Frontend-HiringChannelApp-WithRedux"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <!-- <a href="http://sippos.fwdev.online/">View Demo</a> -->
     ·
     <a href="https://github.com/AdmiralYuuShi/Frontend-HiringChannelApp-WithRedux/issues">Report Bug</a>
     ·
@@ -87,12 +86,10 @@ npm run build
       <image width="200" src='./screenshots/register.png' />
       <image width="200" src='./screenshots/home.png' />
       <image width="200" src='./screenshots/cart.png' />
-      <!-- <image width="200" src='./screenshots/history.png' />
-      <image width="200" src='./screenshots/chartday.png' />
-      <image width="200" src='./screenshots/products.png' />
-      <image width="200" src='./screenshots/categories.png' />
-      <image width="200" src='./screenshots/users.png' />
-      <image width="200" src='./screenshots/profile.png' /> -->
+      <image width="200" src='./screenshots/chart.png' />
+      <image width="200" src='./screenshots/order.png' />
+      <image width="200" src='./screenshots/product.png' />
+      <image width="200" src='./screenshots/user.png' />
       <image width="200" src='./screenshots/checkout.png' />
   </span>
  </p>
