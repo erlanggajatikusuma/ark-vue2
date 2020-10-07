@@ -33,9 +33,9 @@
                             </p>
                         </div>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer" v-if="!print">
                     <div class="footer-btn align-items-center">
-                        <button type="button" class="btn print">Print</button>
+                        <button type="button" class="btn print" @click="printInvoice">Print</button>
                         <p class="h6 my-2">Or</p>
                         <button type="button" class="btn send">Send Email</button>
                     </div>
@@ -50,6 +50,11 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'modalCheckout',
+  data () {
+    return {
+      print: false
+    }
+  },
   computed: {
     ...mapGetters({
       items: 'itemsG',
@@ -58,6 +63,16 @@ export default {
       invoice: 'get_invoice',
       cashier: 'get_cashier'
     })
+  },
+  methods: {
+    printInvoice () {
+      this.print = true
+      setTimeout(() => {
+        this.$htmlToPaper('modalCheckout', null, () => {
+          this.print = false
+        })
+      }, 200)
+    }
   }
 }
 </script>
