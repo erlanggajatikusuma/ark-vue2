@@ -85,14 +85,12 @@ export default {
         /* Orders */
         const productName = []
         this.items.map(item => {
-          console.log(item.name)
           productName.push(item.name)
         })
         /* Cashier */
         this.CASHIER()
         /* Amount */
         const totalPrice = this.price + this.ppn
-        console.log(totalPrice)
         const data = {
           cashier: this.cashier,
           invoice: `#${this.invoice}`,
