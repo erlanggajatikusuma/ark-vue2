@@ -2,20 +2,12 @@ import axios from 'axios'
 
 const state = {
   histories: [],
-  historiesIncome: [],
-  historiesMonth: [],
   paginationHistory: {}
 }
 
 const mutations = {
   SET_HISTORIES (state, payload) {
     state.histories = payload
-  },
-  SET_HISTORIES_INCOME (state, payload) {
-    state.historiesIncome = payload
-  },
-  SET_HISTORIES_MONTH (state, payload) {
-    state.historiesMonth = payload
   },
   SET_PAGINATION_HISTORY (state, payload) {
     state.paginationHistory = payload
@@ -44,11 +36,9 @@ const actions = {
     })
   },
   postHistory (context, payload) {
-    console.log(payload)
     return new Promise((resolve, reject) => {
       axios.post(`${process.env.VUE_APP_BASE_URL}/api/v1/history`, payload)
         .then(res => {
-          console.log(res.data.result)
           resolve(res.data.result)
         })
         .catch(err => reject(err))

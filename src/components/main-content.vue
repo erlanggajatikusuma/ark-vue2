@@ -35,16 +35,12 @@ export default {
     ...mapActions(['getProducts', 'feature']),
     sorter (e) {
       const url = `?sort=${e.target.value}`
-      console.log(e.target.value)
       this.getProducts(url)
       this.active = false
     },
     handlePage (number) {
       const url = `?page=${number}`
       this.getProducts(url)
-    },
-    paging (a) {
-      console.log(a)
     }
   },
   computed: {

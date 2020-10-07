@@ -59,7 +59,6 @@ export default {
   methods: {
     ...mapActions(['getHistories']),
     handlePage (number) {
-      console.log(number)
       const url = `?page=${number}`
       this.getHistories(url)
     }
