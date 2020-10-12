@@ -131,7 +131,7 @@ export default {
           this.success('center', 'success', 'Data successfully added')
         })
         .catch(err => {
-          if (err.response.status === 500) {
+          if (err.response.status === 413) {
             this.failed('File max 2 mb')
           }
         })
@@ -161,7 +161,7 @@ export default {
           this.getProducts()
         })
         .catch(err => {
-          if (err.response.status === 500) {
+          if (err.response.status === 413) {
             this.failed('File max 2 mb')
           }
         })
